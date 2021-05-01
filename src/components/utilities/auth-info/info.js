@@ -1,5 +1,5 @@
 import React, { useState,  } from 'react';
-import { Avatar } from 'antd';
+import { Avatar,Switch } from 'antd';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import FeatherIcon from 'feather-icons-react';
@@ -92,6 +92,7 @@ const AuthInfo = () => {
               <Avatar src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png" />
             </Link>
           </Popover>
+          <Switch defaultChecked style={{ marginRight: 20, marginTop: 8 }} />
         </div>
       }
     </InfoWraper>

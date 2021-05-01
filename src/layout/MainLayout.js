@@ -223,16 +223,6 @@ const ThemeLayout = WrappedComponent => {
                   {topMenu && window.innerWidth > 991 ? (
                     <TopMenuSearch>
                       <div className="top-right-wrap d-flex">
-                        <Link
-                          className={`${activeSearch ? 'search-toggle active' : 'search-toggle'}`}
-                          onClick={() => {
-                            toggleSearch();
-                          }}
-                          to="#"
-                        >
-                          <FeatherIcon icon="search" />
-                          <FeatherIcon icon="x" />
-                        </Link>
                         <div className={`${activeSearch ? 'topMenu-search-form show' : 'topMenu-search-form'}`}>
                           <form action="">
                             <span className="search-icon">
@@ -252,9 +242,6 @@ const ThemeLayout = WrappedComponent => {
                 <Col md={0} sm={18} xs={12}>
                   <>
                     <div className="mobile-action">
-                      <Link className="btn-search" onClick={handleSearchHide} to="#">
-                        {searchHide ? <FeatherIcon icon="search" /> : <FeatherIcon icon="x" />}
-                      </Link>
                       <Link className="btn-auth" onClick={onShowHide} to="#">
                         <FeatherIcon icon="more-vertical" />
                       </Link>
@@ -309,12 +296,11 @@ const ThemeLayout = WrappedComponent => {
                   <Footer className="admin-footer" style={footerStyle}>
                     <Row>
                       <Col md={12} xs={24}>
-                        <span className="admin-footer__copyright">2020 © AazzTech</span>
+                        <span className="admin-footer__copyright">2021 © Bill</span>
                       </Col>
                       <Col md={12} xs={24}>
                         <div className="admin-footer__links">
                           <NavLink to="#">About</NavLink>
-                          <NavLink to="#">Team</NavLink>
                           <NavLink to="#">Contact</NavLink>
                         </div>
                       </Col>

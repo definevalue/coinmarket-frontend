@@ -11,6 +11,7 @@ const Auth = () => {
         <Button className="btn-primary" type="primary">
             <NavLink to="/register">Sign Up</NavLink>
         </Button>
+        
     </>
   );
 };

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Row, Col } from 'antd';
+import React, { Suspense } from 'react';
+import { Row, Col, Spin } from 'antd';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import { Main } from '../styled';
@@ -18,7 +18,15 @@ const Dashboard = () => {
             <Cards headless>
               <div style={{ minHeight: 'calc(100vh - 320px)' }}>
                 <Col xs={24}>
+                <Suspense
+                    fallback={
+                      <div className="spin">
+                        <Spin />
+                      </div>
+                    }
+                  >
                     <CoinListTable />
+                  </Suspense>
                 </Col>
               </div>
             </Cards>
