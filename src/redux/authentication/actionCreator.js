@@ -26,8 +26,8 @@ const login = (data) => {
           }, 1000);
         } else {
           setTimeout(() => {
-            Cookies.set('logedIn', true);
-            return dispatch(loginErr(true));
+            Cookies.set('logedIn', false);
+            return dispatch(loginErr(res));
           }, 1000);
         }
     })

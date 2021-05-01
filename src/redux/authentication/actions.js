@@ -1,3 +1,5 @@
+
+
 import { notification } from 'antd';
 
 const actions = {
@@ -24,9 +26,9 @@ const actions = {
 
   loginErr: err => {
     notification["error"]({
-      message: 'Success',
+      message: 'Failed',
       description:
-        "wrong",
+        err.errors.invalidCredentials,
     });
     return {
       type: actions.LOGIN_ERR,

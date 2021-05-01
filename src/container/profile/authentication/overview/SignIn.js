@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import FeatherIcon from 'feather-icons-react';
 import { Link, NavLink } from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
@@ -10,8 +11,16 @@ import Heading from '../../../../components/heading/heading';
 
 const SignIn = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const isLoading = useSelector(state => state.auth.loading);
+  const isLoggedIn = useSelector(state => state.auth.login);
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    console.log(isLoggedIn);
+    if (isLoggedIn === true)
+      history.push("/");
+  }, [isLoggedIn])
   
   const handleSubmit = (values) => {
     dispatch(login(values));

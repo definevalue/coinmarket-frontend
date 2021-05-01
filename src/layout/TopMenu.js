@@ -42,14 +42,14 @@ const TopMenu = () => {
       <div className="strikingDash-top-menu">
         <ul>
           <li>
-            <Link to="#" className="parent">
-              Dashboard
+            <Link to="/" className="parent">
+              Cryptocurrencies
             </Link>
           </li>
 
           <li>
             <Link to="#" className="parent">
-              Apps
+              Exchanges
             </Link>
           </li>
         </ul>

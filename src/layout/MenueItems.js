@@ -14,7 +14,7 @@ const MenuItems = ({ darkMode, toggleCollapsed, topMenu, events }) => {
   const pathName = window.location.pathname;
   const pathArray = pathName.split(path);
   const mainPath = pathArray[1];
-  const mainPathSplit = mainPath.split('/');
+  const mainPathSplit = mainPath ? mainPath.split('/') : [];
 
   const { onRtlChange, onLtrChange, modeChangeDark, modeChangeLight, modeChangeTopNav, modeChangeSideNav } = events;
   const [openKeys, setOpenKeys] = React.useState(

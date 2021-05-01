@@ -16,6 +16,17 @@ const Main = Styled.div`
             padding: 0px 30px 20px;
         }
     }
+    .chart-wrapper {
+        @media only screen and (min-width: 1599px){
+            height: 600px !important;
+        }
+        @media only screen and (max-width: 1399px){
+            height: 500px !important;
+        }
+        @media only screen and (max-width: 991px){
+            height: 400px !important;
+        }
+    }
     .ant-card-rtl .ant-card-extra{
                 margin-right: 0 !important;
             }
@@ -1211,6 +1222,10 @@ const TableWrapper = Styled.div`
     span.anticon.anticon-left{
         transform: rotateY(${({ theme }) => (theme.rtl ? '180deg' : '0deg')})
     }
+    span.ant-tag {
+        display: inline-block;
+        font-size: 14px !important;
+    }
     &.table-order,
     &.table-seller,
     &.table-data-view{
@@ -1596,6 +1611,8 @@ const ExportStyleWrap = Styled.div`
             }
         }
     }
+
+    
 `;
 export {
   Main,

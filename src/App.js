@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { hot } from 'react-hot-loader/root';
 import { Provider, useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import store from './redux/store';
 import Dashboard from './routes/dashboard';
@@ -13,13 +13,17 @@ import './static/css/style.css';
 import config from './config/config';
 
 const { theme } = config;
+const NotFound = () => {
+  return <Redirect to="/" />;
+};
 
 const ProviderConfig = () => {
-  const { rtl, topMenu, darkMode } = useSelector(state => {
+  const { rtl, isLoggedIn, topMenu, darkMode } = useSelector(state => {
     return {
       darkMode: state.ChangeLayoutMode.data,
       rtl: state.ChangeLayoutMode.rtlData,
       topMenu: state.ChangeLayoutMode.topMenu,
+      isLoggedIn: state.auth.login,
     };
   });
 
@@ -37,14 +41,14 @@ const ProviderConfig = () => {
   return (
     <ConfigProvider direction={rtl ? 'rtl' : 'ltr'}>
       <ThemeProvider theme={{ ...theme, rtl, topMenu, darkMode }}>
-        <Router basename={process.env.PUBLIC_URL}>
+        <Router basename={process.env.PUBLIC_URL} history={history}>
           <Switch>
             <Route path="/login" component={Auth} />
             <Route path="/register" component={Auth} />
             <Route path="/detail/:id" component={Detail} />
             <Route path="/" component={Dashboard} />
-            
-            <Redirect to="/login" />
+            <Route exact path="*" component={NotFound} />
+            {/* <Redirect to="/login" /> */}
           </Switch>
         </Router>
       </ThemeProvider>

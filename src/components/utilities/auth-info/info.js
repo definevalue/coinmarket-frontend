@@ -32,7 +32,7 @@ const AuthInfo = () => {
         <figure className="user-dropdwon__info">
           <img src={require('../../../static/img/avatar/chat-auth.png')} alt="" />
           <figcaption>
-            <Heading as="h5">Abdullah Bin Talha</Heading>
+            <Heading as="h5">Aleksandr</Heading>
           </figcaption>
         </figure>
         <ul className="user-dropdwon__links">

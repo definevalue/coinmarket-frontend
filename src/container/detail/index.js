@@ -10,22 +10,20 @@ const Detail = ({dataId}) => {
     <>
       <PageHeader
         ghost
-        title="Detail/"
+        title={dataId} className="text-center"
       />
       <Main>
         <Row gutter={25}>
           <Col lg={24} xs={24}>
             <Cards headless>
-              <div style={{ minHeight: 'calc(100vh - 320px)' }}>
-                <Col xs={24}>
-                <TradingViewWidget
-                    symbol={`${dataId}`}
-                    theme={Themes.LIGHT}
-                    locale="en"
-                    // autosize
-                />
+                <Col xs={24} className="chart-wrapper">
+                    <TradingViewWidget
+                        symbol={`${dataId}`}
+                        theme={Themes.LIGHT}
+                        locale="en"
+                        autosize
+                    />
                 </Col>
-              </div>
             </Cards>
           </Col>
         </Row>
