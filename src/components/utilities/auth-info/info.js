@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState,  } from 'react';
 import { Avatar } from 'antd';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import FeatherIcon from 'feather-icons-react';
 import { InfoWraper, NavAuth, UserDropDwon } from './auth-info-style';
-import Message from './message';
-import Notification from './notification';
-import Settings from './settings';
-import Support from './support';
 import { Popover } from '../../popup/popup';
-import { Dropdown } from '../../dropdown/dropdown';
 import { logOut } from '../../../redux/authentication/actionCreator';
 import Heading from '../../heading/heading';
+import Auth from './auth';
 
 const AuthInfo = () => {
+  const { isLoggedIn } = useSelector(state => {
+    return {
+      isLoggedIn: state.auth.login,
+    };
+  });
   const dispatch = useDispatch();
   const [state, setState] = useState({
     flag: 'english',
@@ -83,26 +84,16 @@ const AuthInfo = () => {
 
   return (
     <InfoWraper>
-      {/* <Message /> */}
-      {/* <Notification /> */}
-
-      {/* <Settings /> */}
-      {/* <Support /> */}
-      <div className="nav-author">
-        <Dropdown placement="bottomRight" content={country} trigger="click">
-          <Link to="#" className="head-example">
-            <img src={require(`../../../static/img/flag/${flag}.png`)} alt="" />
-          </Link>
-        </Dropdown>
-      </div>
-
-      <div className="nav-author">
-        <Popover placement="bottomRight" content={userContent} action="click">
-          <Link to="#" className="head-example">
-            <Avatar src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png" />
-          </Link>
-        </Popover>
-      </div>
+      {!isLoggedIn ? 
+        <Auth /> : 
+        <div className="nav-author">
+          <Popover placement="bottomRight" content={userContent} action="click">
+            <Link to="#" className="head-example">
+              <Avatar src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png" />
+            </Link>
+          </Popover>
+        </div>
+      }
     </InfoWraper>
   );
 };

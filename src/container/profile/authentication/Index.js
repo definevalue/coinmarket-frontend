@@ -15,9 +15,12 @@ const AuthLayout = WraperContent => {
               <Content>
                 <br />
                 <br />
-                <Heading as="h1">
-                  CrytoMarket
-                </Heading>
+                  <img style={{ width: '150px' }} src={require('../../../static/img/Logo_Dark.svg')} alt="" />
+                  <br />
+                  <br />
+                  <Heading as="h1">
+                    Crypto Market <br />
+                  </Heading>
                 <img
                   className="auth-content-figure"
                   src={require('../../../static/img/auth/Illustration.png')}

@@ -3,14 +3,14 @@ import { Row, Col } from 'antd';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import { Main } from '../styled';
-import CoinListTable from '../pages/overview/coinTable';
+import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 
-const Dashboard = () => {
+const Detail = ({dataId}) => {
   return (
     <>
       <PageHeader
         ghost
-        title="Coin List"
+        title="Detail/"
       />
       <Main>
         <Row gutter={25}>
@@ -18,7 +18,12 @@ const Dashboard = () => {
             <Cards headless>
               <div style={{ minHeight: 'calc(100vh - 320px)' }}>
                 <Col xs={24}>
-                    <CoinListTable />
+                <TradingViewWidget
+                    symbol={`${dataId}`}
+                    theme={Themes.LIGHT}
+                    locale="en"
+                    autosize
+                />
                 </Col>
               </div>
             </Cards>
@@ -29,4 +34,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Detail;

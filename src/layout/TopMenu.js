@@ -1,5 +1,7 @@
 import React, { useLayoutEffect } from 'react';
-import { NavLink, useRouteMatch } from 'react-router-dom';
+import { NavLink, Link, useRouteMatch } from 'react-router-dom';
+import FeatherIcon from 'feather-icons-react';
+import { ReactSVG } from 'react-svg';
 import { TopMenuStyle } from './style';
 
 const TopMenu = () => {
@@ -39,13 +41,17 @@ const TopMenu = () => {
     <TopMenuStyle>
       <div className="strikingDash-top-menu">
         <ul>
-          <ul>
-            <li>
-              <NavLink to={`${path}/social`} onClick={addParentActive}>
-                Dashboard
-              </NavLink>
-            </li>
-          </ul>
+          <li>
+            <Link to="#" className="parent">
+              Dashboard
+            </Link>
+          </li>
+
+          <li>
+            <Link to="#" className="parent">
+              Apps
+            </Link>
+          </li>
         </ul>
       </div>
     </TopMenuStyle>

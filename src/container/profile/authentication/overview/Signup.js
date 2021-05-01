@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
+import FeatherIcon from 'feather-icons-react';
 import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 import { FacebookOutlined, TwitterOutlined } from '@ant-design/icons';
 import { Form, Input, Button, notification } from 'antd';
 import { AuthWrapper } from './style';
-import { Checkbox } from '../../../../components/checkbox/checkbox';
 import Heading from '../../../../components/heading/heading';
-// import { Redirect } from 'react-router';
 
 const options = data => {
   return {
@@ -42,17 +41,11 @@ const SignUp = () => {
     });
   };
 
-  const onChange = checked => {
-    setState({ ...state, checked });
-  };
-
-
-
   return (
     <AuthWrapper>
-      <p className="auth-notice">
-        Already have an account? <NavLink to="/">Sign In</NavLink>
-      </p>
+      <div className="text-right">
+        <Button className="" type="white"><NavLink to="/"><FeatherIcon icon="x" size="20"/></NavLink></Button>
+      </div>
       <div className="auth-contents">
         <Form name="register" onFinish={handleSubmit} layout="vertical">
           <Heading as="h3">
@@ -87,6 +80,10 @@ const SignUp = () => {
               Create Account
             </Button>
           </Form.Item>
+          <p className="auth-notice">
+            Already have an account? 
+            <NavLink to="/login">Sign In</NavLink>
+          </p>
           <p className="form-divider">
             <span>Or</span>
           </p>

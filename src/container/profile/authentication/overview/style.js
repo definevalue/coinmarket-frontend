@@ -70,7 +70,7 @@ const AuthWrapper = Styled.div`
     text-align: center;
   }
   .auth-notice{
-    text-align: right;
+    text-align: left;
     font-weight: 500;
     color: ${({ theme }) => theme['gray-color']};
     @media only screen and (max-width: 767px){

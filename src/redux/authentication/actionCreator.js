@@ -1,6 +1,5 @@
 import Cookies from 'js-cookie';
 import actions from './actions';
-import { notification } from 'antd';
 
 const { loginBegin, loginSuccess, loginErr, logoutBegin, logoutSuccess, logoutErr } = actions;
 

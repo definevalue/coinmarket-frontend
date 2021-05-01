@@ -1,46 +1,28 @@
-import React, { useState } from 'react';
-import { Link, NavLink, useHistory } from 'react-router-dom';
-import { Form, Input, Button, notification } from 'antd';
+import React from 'react';
+import FeatherIcon from 'feather-icons-react';
+import { Link, NavLink } from 'react-router-dom';
+import { Form, Input, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { FacebookOutlined, TwitterOutlined } from '@ant-design/icons';
 import { AuthWrapper } from './style';
 import { login } from '../../../../redux/authentication/actionCreator';
-import { Checkbox } from '../../../../components/checkbox/checkbox';
 import Heading from '../../../../components/heading/heading';
 
 const SignIn = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
   const isLoading = useSelector(state => state.auth.loading);
   const [form] = Form.useForm();
-  const [state, setState] = useState({
-    checked: null,
-  });
-
-  const options = data => {
-    return {
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        method: 'post',
-        body: JSON.stringify(data)
-    };
-  };
-
+  
   const handleSubmit = (values) => {
     dispatch(login(values));
   };
 
-  const onChange = checked => {
-    setState({ ...state, checked });
-  };
-
   return (
     <AuthWrapper>
-      <p className="auth-notice">
-        Don&rsquo;t have an account? <NavLink to="register">Sign up now</NavLink>
-      </p>
+      <div className="text-right">
+        <Button className="" type="white"><NavLink to="/"><FeatherIcon icon="x" size="20"/></NavLink></Button>
+      </div>
+      
       <div className="auth-contents">
         <Form name="login" form={form} onFinish={handleSubmit} layout="vertical">
           <Heading as="h3">
@@ -62,6 +44,9 @@ const SignIn = () => {
               {isLoading ? 'Loading...' : 'Sign In'}
             </Button>
           </Form.Item>
+          <p className="auth-notice">
+            Don&rsquo;t have an account? <NavLink to="register">Sign up now</NavLink>
+          </p>
           <p className="form-divider">
             <span>Or</span>
           </p>

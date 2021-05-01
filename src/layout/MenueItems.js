@@ -1,10 +1,14 @@
 import React from 'react';
 import { Menu } from 'antd';
-import { NavLink, useRouteMatch } from 'react-router-dom';
+import { NavLink, Link, useRouteMatch } from 'react-router-dom';
+import { ReactSVG } from 'react-svg';
 import FeatherIcon from 'feather-icons-react';
 import propTypes from 'prop-types';
+import versions from '../demoData/changelog.json';
 
-const MenuItems = ({ darkMode, toggleCollapsed, topMenu }) => {
+const { SubMenu } = Menu;
+
+const MenuItems = ({ darkMode, toggleCollapsed, topMenu, events }) => {
   const { path } = useRouteMatch();
 
   const pathName = window.location.pathname;
@@ -12,6 +16,7 @@ const MenuItems = ({ darkMode, toggleCollapsed, topMenu }) => {
   const mainPath = pathArray[1];
   const mainPathSplit = mainPath.split('/');
 
+  const { onRtlChange, onLtrChange, modeChangeDark, modeChangeLight, modeChangeTopNav, modeChangeSideNav } = events;
   const [openKeys, setOpenKeys] = React.useState(
     !topMenu ? [`${mainPathSplit.length > 2 ? mainPathSplit[1] : 'dashboard'}`] : [],
   );
@@ -44,9 +49,15 @@ const MenuItems = ({ darkMode, toggleCollapsed, topMenu }) => {
       overflowedIndicator={<FeatherIcon icon="more-vertical" />}
       openKeys={openKeys}
     >
-      <Menu.Item key="home">
-        <NavLink onClick={toggleCollapsed} to={`${path}`}>
-          Dashboard
+      <Menu.Item key="light">
+        <NavLink onClick={toggleCollapsed} to={`${path}/cryptocurrencies`}>
+          Cryptocurrencies
+        </NavLink>
+      </Menu.Item>
+
+      <Menu.Item key="light">
+        <NavLink onClick={toggleCollapsed} to={`${path}/exchanges`}>
+          Exchanges
         </NavLink>
       </Menu.Item>
     </Menu>
@@ -57,6 +68,7 @@ MenuItems.propTypes = {
   darkMode: propTypes.bool,
   topMenu: propTypes.bool,
   toggleCollapsed: propTypes.func,
+  events: propTypes.object,
 };
 
 export default MenuItems;

@@ -20,7 +20,7 @@ const FrontendRoutes = () => {
           </div>
         }
       >
-        <Route exact path="/" component={Login} />
+        <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={SignUp} />
       </Suspense>
     </Switch>

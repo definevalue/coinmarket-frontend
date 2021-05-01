@@ -12,6 +12,7 @@ import TopMenu from './TopMenu';
 import { Div, SmallScreenAuthInfo, SmallScreenSearch, TopMenuSearch } from './style';
 import HeaderSearch from '../components/header-search/header-search';
 import AuthInfo from '../components/utilities/auth-info/info';
+import { changeRtlMode, changeLayoutMode, changeMenuMode } from '../redux/themeLayout/actionCreator';
 
 const { darkTheme } = require('../config/theme/themeVariables');
 
@@ -26,6 +27,7 @@ const ThemeLayout = WrappedComponent => {
         collapsed: false,
         hide: true,
         searchHide: true,
+        customizerAction: false,
         activeSearch: false,
       };
       this.updateDimensions = this.updateDimensions.bind(this);
@@ -48,7 +50,7 @@ const ThemeLayout = WrappedComponent => {
 
     render() {
       const { collapsed, hide, searchHide, activeSearch } = this.state;
-      const { ChangeLayoutMode, rtl, topMenu } = this.props;
+      const { ChangeLayoutMode, rtl, topMenu, changeRtl, changeLayout, changeMenuMode } = this.props;
 
       const left = !rtl ? 'left' : 'right';
       const darkMode = ChangeLayoutMode;
@@ -147,6 +149,43 @@ const ThemeLayout = WrappedComponent => {
         return <div style={{ ...style, ...thumbStyle }} props={props} />;
       };
 
+      const onRtlChange = () => {
+        const html = document.querySelector('html');
+        html.setAttribute('dir', 'rtl');
+        changeRtl(true);
+      };
+
+      const onLtrChange = () => {
+        const html = document.querySelector('html');
+        html.setAttribute('dir', 'ltr');
+        changeRtl(false);
+      };
+
+      const modeChangeDark = () => {
+        changeLayout(true);
+      };
+
+      const modeChangeLight = () => {
+        changeLayout(false);
+      };
+
+      const modeChangeTopNav = () => {
+        changeMenuMode(true);
+      };
+
+      const modeChangeSideNav = () => {
+        changeMenuMode(false);
+      };
+
+      const onEventChange = {
+        onRtlChange,
+        onLtrChange,
+        modeChangeDark,
+        modeChangeLight,
+        modeChangeTopNav,
+        modeChangeSideNav,
+      };
+
       return (
         <Div darkMode={darkMode}>
           <Layout className="layout">
@@ -160,24 +199,62 @@ const ThemeLayout = WrappedComponent => {
             >
               <Row>
                 <Col lg={!topMenu ? 4 : 3} sm={6} xs={12} className="align-center-v navbar-brand">
+                  {!topMenu || window.innerWidth <= 991 ? (
+                    <Button type="link" onClick={toggleCollapsed}>
+                      <img src={require(`../static/img/icon/${collapsed ? 'right.svg' : 'left.svg'}`)} alt="menu" />
+                    </Button>
+                  ) : null}
                   <Link
                     className={topMenu && window.innerWidth > 991 ? 'striking-logo top-menu' : 'striking-logo'}
-                    to="/"
+                    to="/admin"
                   >
-                    <h1>CryptoMarket</h1>
+                    <img
+                      src={!darkMode ? require(`../static/img/Logo_Dark.svg`) : require(`../static/img/Logo_white.png`)}
+                      alt=""
+                    />
                   </Link>
                 </Col>
 
                 <Col lg={!topMenu ? 14 : 15} md={8} sm={0} xs={0}>
+                  {topMenu && window.innerWidth > 991 ? <TopMenu /> : <HeaderSearch rtl={rtl} darkMode={darkMode} />}
                 </Col>
 
                 <Col lg={6} md={10} sm={0} xs={0}>
+                  {topMenu && window.innerWidth > 991 ? (
+                    <TopMenuSearch>
+                      <div className="top-right-wrap d-flex">
+                        <Link
+                          className={`${activeSearch ? 'search-toggle active' : 'search-toggle'}`}
+                          onClick={() => {
+                            toggleSearch();
+                          }}
+                          to="#"
+                        >
+                          <FeatherIcon icon="search" />
+                          <FeatherIcon icon="x" />
+                        </Link>
+                        <div className={`${activeSearch ? 'topMenu-search-form show' : 'topMenu-search-form'}`}>
+                          <form action="">
+                            <span className="search-icon">
+                              <FeatherIcon icon="search" />
+                            </span>
+                            <input type="text" name="search" />
+                          </form>
+                        </div>
+                        <AuthInfo />
+                      </div>
+                    </TopMenuSearch>
+                  ) : (
                     <AuthInfo />
+                  )}
                 </Col>
 
                 <Col md={0} sm={18} xs={12}>
                   <>
                     <div className="mobile-action">
+                      <Link className="btn-search" onClick={handleSearchHide} to="#">
+                        {searchHide ? <FeatherIcon icon="search" /> : <FeatherIcon icon="x" />}
+                      </Link>
                       <Link className="btn-auth" onClick={onShowHide} to="#">
                         <FeatherIcon icon="more-vertical" />
                       </Link>
@@ -201,14 +278,45 @@ const ThemeLayout = WrappedComponent => {
               </Row>
             </div>
             <Layout>
-              
-              <Layout className="container">
+              {!topMenu || window.innerWidth <= 991 ? (
+                <ThemeProvider theme={darkTheme}>
+                  <Sider width={280} style={SideBarStyle} collapsed={collapsed} theme={!darkMode ? 'light' : 'dark'}>
+                    <Scrollbars
+                      className="custom-scrollbar"
+                      autoHide
+                      autoHideTimeout={500}
+                      autoHideDuration={200}
+                      renderThumbHorizontal={renderThumbHorizontal}
+                      renderThumbVertical={renderThumbVertical}
+                      renderView={renderView}
+                      renderTrackVertical={renderTrackVertical}
+                    >
+                      <p className="sidebar-nav-title">MAIN MENU</p>
+                      <MenueItems
+                        topMenu={topMenu}
+                        rtl={rtl}
+                        toggleCollapsed={toggleCollapsedMobile}
+                        darkMode={darkMode}
+                        events={onEventChange}
+                      />
+                    </Scrollbars>
+                  </Sider>
+                </ThemeProvider>
+              ) : null}
+              <Layout className="atbd-main-layout">
                 <Content>
                   <WrappedComponent {...this.props} />
                   <Footer className="admin-footer" style={footerStyle}>
                     <Row>
                       <Col md={12} xs={24}>
-                        <span className="admin-footer__copyright">2021 © CryptoMarket</span>
+                        <span className="admin-footer__copyright">2020 © AazzTech</span>
+                      </Col>
+                      <Col md={12} xs={24}>
+                        <div className="admin-footer__links">
+                          <NavLink to="#">About</NavLink>
+                          <NavLink to="#">Team</NavLink>
+                          <NavLink to="#">Contact</NavLink>
+                        </div>
                       </Col>
                     </Row>
                   </Footer>
@@ -229,6 +337,14 @@ const ThemeLayout = WrappedComponent => {
     };
   };
 
+  const mapStateToDispatch = dispatch => {
+    return {
+      changeRtl: rtl => dispatch(changeRtlMode(rtl)),
+      changeLayout: show => dispatch(changeLayoutMode(show)),
+      changeMenuMode: show => dispatch(changeMenuMode(show)),
+    };
+  };
+
   LayoutComponent.propTypes = {
     ChangeLayoutMode: propTypes.bool,
     rtl: propTypes.bool,
@@ -238,6 +354,6 @@ const ThemeLayout = WrappedComponent => {
     changeMenuMode: propTypes.func,
   };
 
-  return connect(mapStateToProps)(LayoutComponent);
+  return connect(mapStateToProps, mapStateToDispatch)(LayoutComponent);
 };
 export default ThemeLayout;
