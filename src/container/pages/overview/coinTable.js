@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table } from 'antd';
+import { Table, Spin } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { Link } from 'react-router-dom';
 import { UserTableStyleWrapper } from '../style';
@@ -37,6 +37,7 @@ const CoinListTable = () => {
     fetch("/api/cryptos/getCryptos", options({ start, limit, sortCol, sortDir }))
     .then(res => res.json())
     .then(res => {
+      
       setTotalCnt(res.result.status.total_count);
       const arr = res.result.data.map((item) => {
           return {
@@ -142,7 +143,9 @@ const CoinListTable = () => {
   ];
 
   function onChange(pagination, filters, sorter, extra) {
-    console.log(sorter)
+    // return (    
+    //   <Spin size="large" />
+    // )
     const { current, pageSize } = pagination;
     const sortCol = sorter.columnKey != undefined ? sorter.columnKey : "market_cap";
     const sortDir = sorter.order !== undefined && sorter.order === "descend" ? "desc" : "asc";
@@ -151,8 +154,10 @@ const CoinListTable = () => {
 
   return (
     <Cards headless>
+
       <UserTableStyleWrapper>
         <TableWrapper className="table-responsive">
+          
           <Table
             className="table-responsive"
             // rowSelection={rowSelection}
