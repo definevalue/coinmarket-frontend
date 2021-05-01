@@ -22,7 +22,7 @@ const Detail = ({dataId}) => {
                     symbol={`${dataId}`}
                     theme={Themes.LIGHT}
                     locale="en"
-                    autosize
+                    // autosize
                 />
                 </Col>
               </div>
