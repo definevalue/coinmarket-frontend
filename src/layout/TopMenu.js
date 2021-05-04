@@ -1,12 +1,8 @@
 import React, { useLayoutEffect } from 'react';
-import { NavLink, Link, useRouteMatch } from 'react-router-dom';
-import FeatherIcon from 'feather-icons-react';
-import { ReactSVG } from 'react-svg';
+import { Link } from 'react-router-dom';
 import { TopMenuStyle } from './style';
 
 const TopMenu = () => {
-  const { path } = useRouteMatch();
-
   useLayoutEffect(() => {
     const active = document.querySelector('.strikingDash-top-menu a.active');
     const activeDefault = () => {
@@ -23,20 +19,6 @@ const TopMenu = () => {
     return () => window.removeEventListener('load', activeDefault);
   }, []);
 
-  const addParentActive = event => {
-    document.querySelectorAll('.parent').forEach(element => {
-      element.classList.remove('active');
-    });
-
-    const hasSubMenuLeft = event.currentTarget.closest('.has-subMenu-left');
-    const megaMenu = event.currentTarget.closest('.megaMenu-wrapper');
-    if (!megaMenu) {
-      event.currentTarget.closest('ul').previousSibling.classList.add('active');
-      if (hasSubMenuLeft) hasSubMenuLeft.closest('ul').previousSibling.classList.add('active');
-    } else {
-      event.currentTarget.closest('.megaMenu-wrapper').previousSibling.classList.add('active');
-    }
-  };
   return (
     <TopMenuStyle>
       <div className="strikingDash-top-menu">

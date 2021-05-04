@@ -17,10 +17,9 @@ const SignIn = () => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    console.log(isLoggedIn);
     if (isLoggedIn === true)
       history.push("/");
-  }, [isLoggedIn])
+  }, [isLoggedIn, history])
   
   const handleSubmit = (values) => {
     dispatch(login(values));

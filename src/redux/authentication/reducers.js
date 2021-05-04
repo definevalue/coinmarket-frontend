@@ -1,5 +1,4 @@
 import Cookies from 'js-cookie';
-import { Redirect } from 'react-router';
 import actions from './actions';
 
 const { LOGIN_BEGIN, LOGIN_SUCCESS, LOGIN_ERR, LOGOUT_BEGIN, LOGOUT_SUCCESS, LOGOUT_ERR } = actions;

@@ -18,7 +18,7 @@ const Detail = ({dataId}) => {
             <Cards headless>
                 <Col xs={24} className="chart-wrapper">
                     <TradingViewWidget
-                        symbol={`${dataId}`}
+                        symbol={`${dataId}USD`}
                         theme={Themes.LIGHT}
                         locale="en"
                         autosize

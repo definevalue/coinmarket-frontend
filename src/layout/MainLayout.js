@@ -10,7 +10,6 @@ import propTypes from 'prop-types';
 import MenueItems from './MenueItems';
 import TopMenu from './TopMenu';
 import { Div, SmallScreenAuthInfo, SmallScreenSearch, TopMenuSearch } from './style';
-import HeaderSearch from '../components/header-search/header-search';
 import AuthInfo from '../components/utilities/auth-info/info';
 import { changeRtlMode, changeLayoutMode, changeMenuMode } from '../redux/themeLayout/actionCreator';
 
@@ -72,20 +71,6 @@ const ThemeLayout = WrappedComponent => {
         this.setState({
           hide: !hide,
           searchHide: true,
-        });
-      };
-
-      const toggleSearch = () => {
-        this.setState({
-          activeSearch: !activeSearch,
-        });
-      };
-
-      const handleSearchHide = e => {
-        e.preventDefault();
-        this.setState({
-          searchHide: !searchHide,
-          hide: true,
         });
       };
 
@@ -216,7 +201,7 @@ const ThemeLayout = WrappedComponent => {
                 </Col>
 
                 <Col lg={!topMenu ? 14 : 15} md={8} sm={0} xs={0}>
-                  {topMenu && window.innerWidth > 991 ? <TopMenu /> : <HeaderSearch rtl={rtl} darkMode={darkMode} />}
+                  {topMenu && window.innerWidth > 991 ? <TopMenu /> : <></>}
                 </Col>
 
                 <Col lg={6} md={10} sm={0} xs={0}>
@@ -255,7 +240,7 @@ const ThemeLayout = WrappedComponent => {
                 <Col md={0} sm={24} xs={24}>
                   <div className="small-screen-headerRight">
                     <SmallScreenSearch hide={searchHide} darkMode={darkMode}>
-                      <HeaderSearch rtl={rtl} />
+                      {/* <HeaderSearch rtl={rtl} /> */}
                     </SmallScreenSearch>
                     <SmallScreenAuthInfo hide={hide} darkMode={darkMode}>
                       <AuthInfo rtl={rtl} />

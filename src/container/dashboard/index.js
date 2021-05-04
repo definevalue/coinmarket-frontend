@@ -3,7 +3,7 @@ import { Row, Col, Spin } from 'antd';
 import { PageHeader } from '../../components/page-headers/page-headers';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import { Main } from '../styled';
-import CoinListTable from '../pages/overview/coinTable';
+import CoinListTable from './coinTable';
 
 const Dashboard = () => {
   return (
@@ -25,7 +25,7 @@ const Dashboard = () => {
                       </div>
                     }
                   >
-                    <CoinListTable />
+                  <CoinListTable />
                   </Suspense>
                 </Col>
               </div>

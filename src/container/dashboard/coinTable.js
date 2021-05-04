@@ -1,19 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { Table, Spin } from 'antd';
 import FeatherIcon from 'feather-icons-react';
 import { Link } from 'react-router-dom';
-import { UserTableStyleWrapper } from '../style';
-import { TableWrapper } from '../../styled';
-import Heading from '../../../components/heading/heading';
-import { Button } from '../../../components/buttons/buttons';
-import { Tag } from '../../../components/tags/tags';
-import { Cards } from '../../../components/cards/frame/cards-frame';
-import { symbol } from 'prop-types';
+import { TableWrapper } from '../styled';
+import Heading from '../../components/heading/heading';
+import { Button } from '../../components/buttons/buttons';
+import { Tag } from '../../components/tags/tags';
+import { Cards } from '../../components/cards/frame/cards-frame';
 
 const options = data => {
   return {
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       },
       method: 'post',
       body: JSON.stringify(data)
@@ -25,9 +23,6 @@ const numberFormat = (value) => {
 }
 
 const CoinListTable = () => {
-  const [state, setState] = useState({
-    values: {},
-  });
   const [coins, setCoins] = useState([]);
   const [totalCnt, setTotalCnt] = useState([]);
   const usersTableData = [];
@@ -147,7 +142,7 @@ const CoinListTable = () => {
     //   <Spin size="large" />
     // )
     const { current, pageSize } = pagination;
-    const sortCol = sorter.columnKey != undefined ? sorter.columnKey : "market_cap";
+    const sortCol = sorter.columnKey !== undefined ? sorter.columnKey : "market_cap";
     const sortDir = sorter.order !== undefined && sorter.order === "descend" ? "desc" : "asc";
     getCryptos((current - 1) * pageSize + 1 , pageSize, sortCol, sortDir);
   }
@@ -155,12 +150,17 @@ const CoinListTable = () => {
   return (
     <Cards headless>
 
-      <UserTableStyleWrapper>
+      {/* <UserTableStyleWrapper> */}
         <TableWrapper className="table-responsive">
-          
+            <Suspense
+                fallback={
+                    <div className="spin">
+                        <Spin />
+                    </div>
+                }
+            >
           <Table
             className="table-responsive"
-            // rowSelection={rowSelection}
             dataSource={usersTableData}
             columns={usersTableColumns}
             pagination={{
@@ -170,8 +170,8 @@ const CoinListTable = () => {
             }}
             onChange={onChange}
           />
+          </Suspense>
         </TableWrapper>
-      </UserTableStyleWrapper>
     </Cards>
   );
 };

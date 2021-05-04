@@ -1,13 +1,11 @@
 import React, { lazy, Suspense } from 'react';
 import { Spin } from 'antd';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import { useRouteMatch } from 'react-router-dom/cjs/react-router-dom.min';
+import { Switch, Route } from 'react-router-dom';
 import MainLayout from '../layout/MainLayout';
 
 const Dashboard = lazy(() => import('../container/dashboard'));
 
 const DashboardRoutes = () => {
-    const { path } = useRouteMatch();
     return (
         <Switch>
             <Suspense
