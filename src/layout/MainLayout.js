@@ -5,7 +5,7 @@ import FeatherIcon from 'feather-icons-react';
 import { NavLink, Link } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { ThemeProvider } from 'styled-components';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import propTypes from 'prop-types';
 import MenueItems from './MenueItems';
 import TopMenu from './TopMenu';
@@ -19,7 +19,9 @@ const { Header, Footer, Sider, Content } = Layout;
 // const { darkMode } = config;
 
 const ThemeLayout = WrappedComponent => {
+  
   class LayoutComponent extends Component {
+    
     constructor(props) {
       super(props);
       this.state = {
@@ -47,12 +49,15 @@ const ThemeLayout = WrappedComponent => {
       });
     }
 
+    
+
     render() {
       const { collapsed, hide, searchHide, activeSearch } = this.state;
-      const { ChangeLayoutMode, rtl, topMenu, changeRtl, changeLayout, changeMenuMode } = this.props;
-
+      const { ChangeLayoutMode, rtl, topMenu, changeRtl, changeLayout, isBlur, changeMenuMode } = this.props;
+      
       const left = !rtl ? 'left' : 'right';
       const darkMode = ChangeLayoutMode;
+
       const toggleCollapsed = () => {
         this.setState({
           collapsed: !collapsed,
@@ -172,8 +177,8 @@ const ThemeLayout = WrappedComponent => {
       };
 
       return (
-        <Div darkMode={darkMode}>
-          <Layout className="layout">
+        <Div darkMode={darkMode} onclick={setBlur}>
+          <Layout className="layout" >
             <Header
               style={{
                 position: 'fixed',
@@ -181,7 +186,7 @@ const ThemeLayout = WrappedComponent => {
                 top: 0,
                 [!rtl ? 'left' : 'right']: 0,
               }}
-            >
+              className={isBlur}>
               <Row>
                 <Col lg={!topMenu ? 4 : 3} sm={6} xs={12} className="align-center-v navbar-brand">
                   {!topMenu || window.innerWidth <= 991 ? (
@@ -305,8 +310,14 @@ const ThemeLayout = WrappedComponent => {
       ChangeLayoutMode: state.ChangeLayoutMode.data,
       rtl: state.ChangeLayoutMode.rtlData,
       topMenu: state.ChangeLayoutMode.topMenu,
+      isBlur: state.ChangeLayoutMode.isBlur,
     };
   };
+
+
+  const setBlur = () => {
+    console.log("asdf");
+  }
 
   const mapStateToDispatch = dispatch => {
     return {

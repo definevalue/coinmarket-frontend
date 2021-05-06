@@ -45,7 +45,9 @@ const ProviderConfig = () => {
 
 function App() {
   return (
-    <Provider store={store}>
+    <Provider store={store} onOutsideClick={() => {
+      console.log("I am called whenever click happens outside of 'AnyOtherReactComponent' component")
+    }}>
       <ProviderConfig />
     </Provider>
   );

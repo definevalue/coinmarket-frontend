@@ -1,8 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import FeatherIcon from 'feather-icons-react';
 import { Link, NavLink } from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
+import {
+  GoogleReCaptchaProvider,
+  GoogleReCaptcha
+} from 'react-google-recaptcha-v3';
 import { useDispatch, useSelector } from 'react-redux';
 import { FacebookOutlined, TwitterOutlined } from '@ant-design/icons';
 import { AuthWrapper } from './style';
@@ -10,6 +14,7 @@ import { login } from '../../../../redux/authentication/actionCreator';
 import Heading from '../../../../components/heading/heading';
 
 const SignIn = () => {
+  const [key, setKey] = useState();
   const dispatch = useDispatch();
   const history = useHistory();
   const isLoading = useSelector(state => state.auth.loading);
@@ -22,9 +27,13 @@ const SignIn = () => {
   }, [isLoggedIn, history])
   
   const handleSubmit = (values) => {
+    values.token = key;
     dispatch(login(values));
   };
 
+  const handleVerify = (token) => {
+    setKey(token);
+  }
   return (
     <AuthWrapper>
       <div className="text-right">
@@ -48,6 +57,9 @@ const SignIn = () => {
             <Input.Password placeholder="Password" />
           </Form.Item>
           <Form.Item>
+          <GoogleReCaptchaProvider reCaptchaKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI">
+            <GoogleReCaptcha onVerify={handleVerify} />
+          </GoogleReCaptchaProvider>
             <Button className="btn-signin" htmlType="submit" type="primary" size="large" onSubmit={handleSubmit}>
               {isLoading ? 'Loading...' : 'Sign In'}
             </Button>

@@ -1614,6 +1614,15 @@ const ExportStyleWrap = Styled.div`
 
     
 `;
+
+const AdvertSlider = Styled.div`
+    .slick-slider .slick-slide {
+        padding: 15px;   
+    }
+    .slick-slider .slick-slide img {
+        width: 100%;
+    }
+`;
 export {
   Main,
   ButtonsGroupWrapper,
@@ -1637,4 +1646,5 @@ export {
   TableWrapper,
   ImportStyleWrap,
   ExportStyleWrap,
+  AdvertSlider,
 };

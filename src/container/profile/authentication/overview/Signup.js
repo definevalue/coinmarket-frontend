@@ -5,7 +5,13 @@ import { FacebookOutlined, TwitterOutlined } from '@ant-design/icons';
 import { Form, Input, Button, notification } from 'antd';
 import { AuthWrapper } from './style';
 import Heading from '../../../../components/heading/heading';
+// import Recaptcha from 'react-gcaptcha';
+import {
+  GoogleReCaptchaProvider,
+  GoogleReCaptcha
+} from 'react-google-recaptcha-v3';
 
+  
 const options = data => {
   return {
       headers: {
@@ -22,7 +28,7 @@ const SignUp = () => {
     checked: null,
   });
   const handleSubmit = values => {
-    setState({ ...state, values });
+    values.token = token
     // console.log(values)
     fetch('/api/users/signup', options(values)).then(res => res.json()).then(res => {
       if (res.success === "success") {
@@ -40,7 +46,7 @@ const SignUp = () => {
       }
     });
   };
-
+  const [token, setToken] = useState();
   return (
     <AuthWrapper>
       <div className="text-right">
@@ -75,6 +81,18 @@ const SignUp = () => {
           >
             <Input.Password placeholder="Password" />
           </Form.Item>
+          <GoogleReCaptchaProvider reCaptchaKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI">
+            <GoogleReCaptcha onVerify={res => {
+            setToken(res);
+          }} />
+          </GoogleReCaptchaProvider>
+          {/* <Recaptcha
+          sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+          render="explicit"
+          onloadCallback={loaded}
+          verifyCallback={callback}
+          /> */}
+
           <Form.Item>
             <Button className="btn-create" htmlType="submit" type="primary" size="large" onSubmit={handleSubmit}>
               Create Account
@@ -106,6 +124,7 @@ const SignUp = () => {
             </li>
           </ul>
         </Form>
+        
       </div>
     </AuthWrapper>
   );

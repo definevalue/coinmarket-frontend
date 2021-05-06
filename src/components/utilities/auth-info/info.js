@@ -1,9 +1,9 @@
-import React, { useState,  } from 'react';
+import React from 'react';
 import { Avatar,Switch } from 'antd';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import FeatherIcon from 'feather-icons-react';
-import { InfoWraper, NavAuth, UserDropDwon } from './auth-info-style';
+import { InfoWraper, UserDropDwon } from './auth-info-style';
 import { Popover } from '../../popup/popup';
 import { logOut } from '../../../redux/authentication/actionCreator';
 import Heading from '../../heading/heading';
@@ -16,10 +16,9 @@ const AuthInfo = () => {
     };
   });
   const dispatch = useDispatch();
-  const [state, setState] = useState({
-    flag: 'english',
-  });
-  const { flag } = state;
+  // const [state, setState] = useState({
+  //   flag: 'english',
+  // });
 
   const SignOut = e => {
     e.preventDefault();
@@ -52,34 +51,6 @@ const AuthInfo = () => {
         </Link>
       </div>
     </UserDropDwon>
-  );
-
-  const onFlagChangeHandle = value => {
-    setState({
-      ...state,
-      flag: value,
-    });
-  };
-
-  const country = (
-    <NavAuth>
-      <Link onClick={() => onFlagChangeHandle('english')} to="#">
-        <img src={require('../../../static/img/flag/english.png')} alt="" />
-        <span>English</span>
-      </Link>
-      <Link onClick={() => onFlagChangeHandle('germany')} to="#">
-        <img src={require('../../../static/img/flag/germany.png')} alt="" />
-        <span>Germany</span>
-      </Link>
-      <Link onClick={() => onFlagChangeHandle('spain')} to="#">
-        <img src={require('../../../static/img/flag/spain.png')} alt="" />
-        <span>Spain</span>
-      </Link>
-      <Link onClick={() => onFlagChangeHandle('turky')} to="#">
-        <img src={require('../../../static/img/flag/turky.png')} alt="" />
-        <span>Turky</span>
-      </Link>
-    </NavAuth>
   );
 
   return (

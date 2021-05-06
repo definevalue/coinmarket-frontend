@@ -8,6 +8,7 @@ const initialState = {
   loading: false,
   rtlLoading: false,
   menuLoading: false,
+  isBlur: "blur",
   error: null,
 };
 
@@ -23,6 +24,10 @@ const {
   CHANGE_MENU_MODE_BEGIN,
   CHANGE_MENU_MODE_SUCCESS,
   CHANGE_MENU_MODE_ERR,
+
+  SET_BLUR_BEGIN,
+  SET_BLUR_SUCCESS,
+  SET_BLUR_ERR,
 } = actions;
 
 const LayoutChangeReducer = (state = initialState, action) => {
@@ -80,6 +85,20 @@ const LayoutChangeReducer = (state = initialState, action) => {
         error: err,
         menuLoading: false,
       };
+      case SET_BLUR_BEGIN:
+        return {
+          ...state,
+        };
+      case SET_BLUR_SUCCESS:
+        return {
+          ...state,
+          isBlur: data,
+        };
+      case SET_BLUR_ERR:
+        return {
+          ...state,
+          error: err,
+        };
     default:
       return state;
   }

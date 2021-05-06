@@ -7,10 +7,12 @@ const {
   changeRtlBegin,
   changeRtlSuccess,
   changeRtlErr,
-
   changeMenuBegin,
   changeMenuSuccess,
   changeMenuErr,
+  setBlurBegin,
+  setBlurSuccess,
+  setBlurErr
 } = actions;
 
 const changeLayoutMode = value => {
@@ -46,4 +48,15 @@ const changeMenuMode = value => {
   };
 };
 
-export { changeLayoutMode, changeRtlMode, changeMenuMode };
+const setBlur = value => {
+  return async dispatch => {
+    try {
+      dispatch(setBlurBegin());
+      dispatch(setBlurSuccess(value));
+    } catch (err) {
+      dispatch(setBlurErr(err));
+    }
+  };
+};
+
+export { changeLayoutMode, changeRtlMode, changeMenuMode, setBlur };

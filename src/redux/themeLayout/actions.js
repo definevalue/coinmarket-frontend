@@ -11,6 +11,10 @@ const actions = {
   CHANGE_MENU_MODE_SUCCESS: 'CHANGE_MENU_MODE_SUCCESS',
   CHANGE_MENU_MODE_ERR: 'CHANGE_MENU_MODE_ERR',
 
+  SET_BLUR_BEGIN: 'SET_BLUR_BEGIN',
+  SET_BLUR_SUCCESS: 'SET_BLUR_SUCCESS',
+  SET_BLUR_ERR: 'SET_BLUR_ERR',
+
   changeLayoutBegin: () => {
     return {
       type: actions.CHANGE_LAYOUT_MODE_BEGIN,
@@ -67,6 +71,27 @@ const actions = {
   changeMenuErr: err => {
     return {
       type: actions.CHANGE_MENU_MODE_ERR,
+      err,
+    };
+  },
+
+  setBlurBegin: () => {
+    
+    return {
+      type: actions.SET_BLUR_BEGIN,
+    };
+  },
+
+  setBlurSuccess: data => {
+    return {
+      type: actions.SET_BLUR_SUCCESS,
+      data,
+    };
+  },
+
+  setBlurErr: err => {
+    return {
+      type: actions.SET_BLUR_ERR,
       err,
     };
   },
