@@ -1,16 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import FeatherIcon from 'feather-icons-react';
 import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
-import { FacebookOutlined, TwitterOutlined } from '@ant-design/icons';
+import ReCAPTCHA from "react-google-recaptcha";
 import { Form, Input, Button, notification } from 'antd';
+
 import { AuthWrapper } from './style';
 import Heading from '../../../../components/heading/heading';
-// import Recaptcha from 'react-gcaptcha';
-import {
-  GoogleReCaptchaProvider,
-  GoogleReCaptcha
-} from 'react-google-recaptcha-v3';
-
   
 const options = data => {
   return {
@@ -23,15 +18,23 @@ const options = data => {
 };
 
 const SignUp = () => {
-  const [state, setState] = useState({
-    values: null,
-    checked: null,
-  });
+  // const [state, setState] = useState({
+  //   values: null,
+  //   checked: null,
+  // });
+  
+  // const [res, setRes] = useState(true);
+  var verifyCallback = function (response) {
+    console.log(response)
+    
+  };
+
   const handleSubmit = values => {
-    values.token = token
+    // console.log(values); return;
+    // values.token = token
     // console.log(values)
     fetch('/api/users/signup', options(values)).then(res => res.json()).then(res => {
-      if (res.success === "success") {
+      if (res.status === "success") {
         notification["success"]({
           message: 'Success',
           description:
@@ -41,12 +44,12 @@ const SignUp = () => {
         notification["error"]({
           message: 'Error',
           description:
-            'wrong.',
+            res.message,
         });
       }
     });
   };
-  const [token, setToken] = useState();
+
   return (
     <AuthWrapper>
       <div className="text-right">
@@ -81,18 +84,12 @@ const SignUp = () => {
           >
             <Input.Password placeholder="Password" />
           </Form.Item>
-          <GoogleReCaptchaProvider reCaptchaKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI">
-            <GoogleReCaptcha onVerify={res => {
-            setToken(res);
-          }} />
-          </GoogleReCaptchaProvider>
-          {/* <Recaptcha
-          sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-          render="explicit"
-          onloadCallback={loaded}
-          verifyCallback={callback}
-          /> */}
-
+          <div style={{ marginBottom: '10px' }}>
+            <ReCAPTCHA
+              sitekey={`6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI`}
+              onChange={verifyCallback}
+            />
+          </div>
           <Form.Item>
             <Button className="btn-create" htmlType="submit" type="primary" size="large" onSubmit={handleSubmit}>
               Create Account
@@ -102,27 +99,6 @@ const SignUp = () => {
             Already have an account? 
             <NavLink to="/login">Sign In</NavLink>
           </p>
-          <p className="form-divider">
-            <span>Or</span>
-          </p>
-          <ul className="social-login signin-social">
-            <li>
-              <a className="google-signup" href="/">
-                <img src={require('../../../../static/img/google.png')} alt="" />
-                <span>Sign up with Google</span>
-              </a>
-            </li>
-            <li>
-              <a className="facebook-sign" href="/">
-                <FacebookOutlined />
-              </a>
-            </li>
-            <li>
-              <a className="twitter-sign" href="/">
-                <TwitterOutlined />
-              </a>
-            </li>
-          </ul>
         </Form>
         
       </div>

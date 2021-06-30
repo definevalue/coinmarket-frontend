@@ -8,6 +8,7 @@ import store from './redux/store';
 import Dashboard from './routes/dashboard';
 import Detail from './routes/detail';
 import Auth from './routes/auth';
+import Settings from './routes/settings';
 import './static/css/style.css';
 import config from './config/config';
 
@@ -33,6 +34,7 @@ const ProviderConfig = () => {
             <Route path="/login" component={Auth} />
             <Route path="/register" component={Auth} />
             <Route path="/detail/:id" component={Detail} />
+            <Route path="/settings" component={Settings} />
             <Route path="/" component={Dashboard} />
             <Route exact path="*" component={NotFound} />
             {/* <Redirect to="/login" /> */}

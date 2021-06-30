@@ -1,39 +1,65 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import Cookies from 'js-cookie';
 import { useHistory } from 'react-router-dom';
 import FeatherIcon from 'feather-icons-react';
-import { Link, NavLink } from 'react-router-dom';
-import { Form, Input, Button } from 'antd';
-import {
-  GoogleReCaptchaProvider,
-  GoogleReCaptcha
-} from 'react-google-recaptcha-v3';
+import { NavLink } from 'react-router-dom';
+import { Form, Input, Button, notification } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { FacebookOutlined, TwitterOutlined } from '@ant-design/icons';
 import { AuthWrapper } from './style';
 import { login } from '../../../../redux/authentication/actionCreator';
 import Heading from '../../../../components/heading/heading';
 
+const options = data => {
+  return {
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      method: 'post',
+      body: JSON.stringify(data)
+  };
+};
+
 const SignIn = () => {
-  const [key, setKey] = useState();
+  // const [key, setKey] = useState();
   const dispatch = useDispatch();
   const history = useHistory();
   const isLoading = useSelector(state => state.auth.loading);
-  const isLoggedIn = useSelector(state => state.auth.login);
+  const isSigned = useSelector(state => state.auth.isSigned);
   const [form] = Form.useForm();
 
   useEffect(() => {
-    if (isLoggedIn === true)
+    if (isSigned === true)
       history.push("/");
-  }, [isLoggedIn, history])
+  }, [isSigned, history])
   
   const handleSubmit = (values) => {
-    values.token = key;
-    dispatch(login(values));
+    fetch('/api/users/login', options(values))
+    .then(res => res.json())
+    .then(res => {
+      if (res.status === 'success') {
+        Cookies.set("isSigned", true);
+        Cookies.set("jwt", res.token);
+        Cookies.set("signedUser", JSON.stringify(res.data));
+        notification["success"]({
+          message: 'Success',
+          description:
+            "Welcome Signin!",
+        });
+        const data = {
+          isSigned: true,
+          signedUser: res.data
+        }
+        return dispatch(login(data));
+      } else {
+        notification["error"]({
+          message: 'Error',
+          description:
+            res.message,
+        });
+      }
+    })
   };
 
-  const handleVerify = (token) => {
-    setKey(token);
-  }
   return (
     <AuthWrapper>
       <div className="text-right">
@@ -48,18 +74,16 @@ const SignIn = () => {
           <Form.Item
             name="username"
             rules={[{ message: 'Please input your username or Email!', required: true }]}
-            initialValue="name"
+            initialValue="bill"
             label="Username"
           >
             <Input />
           </Form.Item>
-          <Form.Item name="password" initialValue="123456" label="Password">
+          <Form.Item name="password" initialValue="123123" label="Password">
             <Input.Password placeholder="Password" />
           </Form.Item>
           <Form.Item>
-          <GoogleReCaptchaProvider reCaptchaKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI">
-            <GoogleReCaptcha onVerify={handleVerify} />
-          </GoogleReCaptchaProvider>
+          
             <Button className="btn-signin" htmlType="submit" type="primary" size="large" onSubmit={handleSubmit}>
               {isLoading ? 'Loading...' : 'Sign In'}
             </Button>
@@ -67,27 +91,6 @@ const SignIn = () => {
           <p className="auth-notice">
             Don&rsquo;t have an account? <NavLink to="register">Sign up now</NavLink>
           </p>
-          <p className="form-divider">
-            <span>Or</span>
-          </p>
-          <ul className="social-login">
-            <li>
-              <Link className="google-signup" to="#">
-                <img src={require('../../../../static/img/google.png')} alt="" />
-                <span>Sign in with Google</span>
-              </Link>
-            </li>
-            <li>
-              <Link className="facebook-sign" to="#">
-                <FacebookOutlined />
-              </Link>
-            </li>
-            <li>
-              <Link className="twitter-sign" to="#">
-                <TwitterOutlined />
-              </Link>
-            </li>
-          </ul>
         </Form>
       </div>
     </AuthWrapper>

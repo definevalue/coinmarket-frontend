@@ -1,8 +1,15 @@
 import React, { useLayoutEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { TopMenuStyle } from './style';
 
 const TopMenu = () => {
+  const {signedUser} = useSelector(state => {
+    return {
+      signedUser: state.auth.signedUser
+    }
+  })
+
   useLayoutEffect(() => {
     const active = document.querySelector('.strikingDash-top-menu a.active');
     const activeDefault = () => {
@@ -28,12 +35,13 @@ const TopMenu = () => {
               Cryptocurrencies
             </Link>
           </li>
-
-          <li>
-            <Link to="#" className="parent">
-              Exchanges
-            </Link>
-          </li>
+          {signedUser.role === 'Admin' ? (
+            <li>
+              <Link to="/settings" className="parent">
+                settings
+              </Link>
+            </li>
+          ) : ''}
         </ul>
       </div>
     </TopMenuStyle>

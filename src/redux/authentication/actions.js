@@ -17,10 +17,11 @@ const actions = {
     };
   },
 
-  loginSuccess: data => {
+  loginSuccess: (isSigned, user) => {
     return {
       type: actions.LOGIN_SUCCESS,
-      data,
+      data: isSigned,
+      signedUser: user,
     };
   },
 

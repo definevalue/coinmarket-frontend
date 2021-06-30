@@ -49,12 +49,6 @@ const MenuItems = ({ darkMode, toggleCollapsed, topMenu, events }) => {
           Cryptocurrencies
         </NavLink>
       </Menu.Item>
-
-      <Menu.Item key="exchanges">
-        <NavLink onClick={toggleCollapsed} to={`${path}/exchanges`}>
-          Exchanges
-        </NavLink>
-      </Menu.Item>
     </Menu>
   );
 };

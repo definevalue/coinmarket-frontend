@@ -1,11 +1,10 @@
 import React, { Suspense, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Row, Col, Spin } from 'antd';
-import { PageHeader } from '../../components/page-headers/page-headers';
 import { Cards } from '../../components/cards/frame/cards-frame';
 import { Main } from '../styled';
 import CoinListTable from './coinTable';
-import AdvertSLider from './advertSlider';
+import AdvertSlider from './advertSlider';
 import { setBlur } from '../../redux/themeLayout/actionCreator';
 
 const options = data => {
@@ -35,7 +34,7 @@ const Dashboard = () => {
         }
     });
   }
-  const handleClickOutside = (event) => {
+  const handleClickOutside = ( event ) => {
     dispatch(setBlur("noblur"))
   };
   useEffect(() => {
@@ -45,25 +44,13 @@ const Dashboard = () => {
       document.removeEventListener('click', handleClickOutside, true);
     };
   }, []);
-
-  
   
   return (
     <>
       <Main>
       <Row gutter={25} className="advert">
-        <Col xs={24} sm={8}>
-          <PageHeader
-            ghost
-            title="You can enjoy with Mooncoin!" className="text-center"
-          />
-          <PageHeader
-            ghost
-            title="Please Signin and look at the top-right!" className="text-center"
-          />
-        </Col>
-        <Col xs={24} sm={16}>
-          <AdvertSLider />
+        <Col xs={24} sm={24}>
+          <AdvertSlider />
         </Col>
       </Row>
         <Row gutter={25} className={isBlur}>

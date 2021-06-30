@@ -1,52 +1,49 @@
-import Cookies from 'js-cookie';
 import actions from './actions';
 
-const { LOGIN_BEGIN, LOGIN_SUCCESS, LOGIN_ERR, LOGOUT_BEGIN, LOGOUT_SUCCESS, LOGOUT_ERR } = actions;
+const { SET_MOONCOIN_BEGIN, SET_MOONCOIN_SUCCESS, SET_MOONCOIN_ERR, SET_REFRESH_BEGIN, SET_REFRESH_SUCCESS, SET_REFRESH_ERR } = actions;
 
 const initState = {
-  isSigned: Cookies.get('isSigned'),
-  signedUser: JSON.parse(Cookies.get('signedUser')),
-  loading: false,
-  error: null
+  isMooncoin: false,
+  isRefresh: false,
+  loading: false
 };
 
 /**
  *
  * @todo impure state mutation/explaination
  */
-const AuthReducer = (state = initState, action) => {
-  const { type, data, signedUser, err } = action;
+ const CryptoReducer = (state = initState, action) => {
+    const { type, data, err } = action;
   switch (type) {
-    case LOGIN_BEGIN:
+    case SET_MOONCOIN_BEGIN:
       return {
         ...state,
         loading: true,
       };
-    case LOGIN_SUCCESS:
+    case SET_MOONCOIN_SUCCESS:
       return {
         ...state,
-        isSigned: data,
-        signedUser: signedUser,
+        isMooncoin: data,
         loading: false,
       };
-    case LOGIN_ERR:
+    case SET_MOONCOIN_ERR:
       return {
         ...state,
         error: err,
         loading: false,
       };
-    case LOGOUT_BEGIN:
+    case SET_REFRESH_BEGIN:
       return {
         ...state,
         loading: true,
       };
-    case LOGOUT_SUCCESS:
+    case SET_REFRESH_SUCCESS:
       return {
         ...state,
         isSigned: data,
         loading: false,
       };
-    case LOGOUT_ERR:
+    case SET_REFRESH_ERR:
       return {
         ...state,
         error: err,
@@ -55,5 +52,6 @@ const AuthReducer = (state = initState, action) => {
     default:
       return state;
   }
-};
-export default AuthReducer;
+}
+
+export default CryptoReducer;

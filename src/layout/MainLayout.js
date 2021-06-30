@@ -5,7 +5,7 @@ import FeatherIcon from 'feather-icons-react';
 import { NavLink, Link } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { ThemeProvider } from 'styled-components';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import MenueItems from './MenueItems';
 import TopMenu from './TopMenu';
@@ -310,13 +310,13 @@ const ThemeLayout = WrappedComponent => {
       ChangeLayoutMode: state.ChangeLayoutMode.data,
       rtl: state.ChangeLayoutMode.rtlData,
       topMenu: state.ChangeLayoutMode.topMenu,
-      isBlur: state.ChangeLayoutMode.isBlur,
+      // isBlur: state.ChangeLayoutMode.isBlur,
+      isBlur: false,
     };
   };
 
-
   const setBlur = () => {
-    console.log("asdf");
+    console.log("ok")
   }
 
   const mapStateToDispatch = dispatch => {

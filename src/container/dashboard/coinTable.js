@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { Table, Spin } from 'antd';
+import { useSelector } from 'react-redux';
 import FeatherIcon from 'feather-icons-react';
 import { Link } from 'react-router-dom';
 import { TableWrapper } from '../styled';
@@ -23,17 +24,22 @@ const numberFormat = (value) => {
 }
 
 const CoinListTable = () => {
+  const { isMooncoin } = useSelector( state => {
+    return {
+      isMooncoin: state.crypto.isMooncoin
+    }
+  })
   const [coins, setCoins] = useState([]);
   const [totalCnt, setTotalCnt] = useState([]);
   const usersTableData = [];
   const pageSize = 100;
   
   const getCryptos = (start, limit, sortCol, sortDir) => {
-    fetch("/api/cryptos/getCryptos", options({ start, limit, sortCol, sortDir }))
+    fetch("/api/cryptos/getCryptos", options({ start, limit, sortCol, sortDir, isMooncoin }))
     .then(res => res.json())
     .then(res => {
-      
-      setTotalCnt(res.result.status.total_count);
+      setTotalCnt(res.result.total_count);
+      // console.log(res.result.data);return;
       const arr = res.result.data.map((item) => {
           return {
             name: item.name !== undefined ? item.name : 'unknown',
@@ -52,7 +58,7 @@ const CoinListTable = () => {
 
   useEffect(() => {
       getCryptos(1, pageSize, 'market_cap', 'desc');
-    }, []);
+    }, [ isMooncoin ]);
 
   coins.map((user, index) => {
     const { name, symbol, imageUrl, price, percent_change_7d, percent_change_1h, volume_24h, market_cap} = user;

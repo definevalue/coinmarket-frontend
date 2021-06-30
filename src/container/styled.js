@@ -1617,11 +1617,16 @@ const ExportStyleWrap = Styled.div`
 
 const AdvertSlider = Styled.div`
     .slick-slider .slick-slide {
-        padding: 15px;   
+        padding: 15px;
+        .ant-card {
+            height: 200px;
+        }
     }
     .slick-slider .slick-slide img {
         width: 100%;
     }
+
+
 `;
 export {
   Main,
